@@ -18,11 +18,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   void _publishPost() async {
     final title = _titleController.text.trim();
     final description = _descController.text.trim();
-    
+
     if (title.isEmpty || description.isEmpty) return;
-    
+
     setState(() => _isLoading = true);
-    
+
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       // 1. Create Post Logic
@@ -32,7 +32,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         'userId': user.uid,
         'timestamp': FieldValue.serverTimestamp(),
       });
-      
+
       if (mounted) {
         _titleController.clear();
         _descController.clear();
@@ -65,7 +65,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               maxLines: 3,
             ),
             const SizedBox(height: 20),
-            _isLoading 
+            _isLoading
                 ? const CircularProgressIndicator()
                 // Publish button
                 : ElevatedButton(
@@ -78,3 +78,67 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+
+// class CreatePostScreen extends StatefulWidget {
+//   final Function()? onPostPublished;
+//   const CreatePostScreen({super.key, this.onPostPublished});
+//   @override
+//   State<CreatePostScreen> createState() => _CreatePostScreenState();
+// }
+
+// class _CreatePostScreenState extends State<CreatePostScreen> {
+//   final firestore = FirebaseFirestore.instance.collection('Posts');
+//   final currentUser = FirebaseAuth.instance.currentUser!.uid;
+
+//   final _title = TextEditingController();
+//   final _descController = TextEditingController();
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           mainAxisAlignment: .center,
+
+//           children: [
+//             TextFormField(
+//               controller: _title,
+//               decoration: InputDecoration(hintText: 'Enter Your Title '),
+//             ),
+//             SizedBox(height: 20),
+//             TextFormField(
+//               controller: _descController,
+//               decoration: InputDecoration(hintText: 'Description '),
+//             ),
+//             SizedBox(height: 30),
+//             ElevatedButton(
+//               onPressed: () {
+//                 firestore
+//                     .add({
+//                       'title': _title.text.toString(),
+//                       'description': _descController.text.toString(),
+//                       'userId': currentUser.toString(),
+//                       'timestamp': FieldValue.serverTimestamp(),
+//                     })
+//                     .then((onValue) {
+//                       _title.clear();
+//                       _descController.clear();
+
+//                       print('Data Added Successfully');
+//                     })
+//                     .onError((handleError, v) {
+//                       print('ERROR OCCUR');
+//                     });
+//               },
+//               child: Text('Add Post'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -15,7 +15,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _messageController = TextEditingController();
-  
+
   String _chatId = '';
 
   @override
@@ -26,8 +26,6 @@ class _ChatScreenState extends State<ChatScreen> {
     final ids = [currentUserId, widget.receiverId];
     ids.sort(); // Sorting ensures UserA & UserB always get the same ID
     _chatId = ids.join('_');
-
-    
   }
 
   void _sendMessage() async {
@@ -43,10 +41,10 @@ class _ChatScreenState extends State<ChatScreen> {
           .doc(_chatId)
           .collection('messages')
           .add({
-        'text': text,
-        'senderId': user.uid,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
+            'text': text,
+            'senderId': user.uid,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
 
       // 6b. Update the parent document with metadata for previews
       await _firestore.collection('chats').doc(_chatId).set({
@@ -62,9 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chat'),
-      ),
+      appBar: AppBar(title: const Text('Chat')),
       body: SafeArea(
         child: Column(
           children: [
@@ -153,3 +149,22 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// class ChatScreen extends StatefulWidget {
+//   final String receiverId;
+//   const ChatScreen({super.key, required this.receiverId});
+
+//   @override
+//   State<ChatScreen> createState() => _ChatScreenState();
+// }
+
+// class _ChatScreenState extends State<ChatScreen> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Scaffold(body: Column(children: [
+
+//     ],));
+//   }
+// }

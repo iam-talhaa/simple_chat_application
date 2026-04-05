@@ -39,6 +39,7 @@ class PostListScreen extends StatelessWidget {
             .orderBy('timestamp', descending: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          print('$snapshot');
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -96,3 +97,49 @@ class PostListScreen extends StatelessWidget {
     );
   }
 }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/material.dart';
+
+// class PostListScreen extends StatefulWidget {
+//   const PostListScreen({super.key});
+
+//   @override
+//   State<PostListScreen> createState() => _PostListScreenState();
+// }
+
+// class _PostListScreenState extends State<PostListScreen> {
+//   // final _firestore = FirebaseFirestore.instance.collection('Post').snapshots();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: StreamBuilder(
+//         stream: FirebaseFirestore.instance.collection("Post").snapshots(),
+//         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//           final users = snapshot.data!.docs;
+//           return ListView.builder(
+//             itemCount: users.length,
+//             itemBuilder: (contex, index) {
+//               final user = users[index];
+//               final data = user.data() as Map<String, dynamic>;
+
+//               final String title = data['title'];
+//               final String description = data['Description'];
+//               final String postOwnerId = data['Uid'];
+
+//               return ListTile(
+//                 leading: Icon(Icons.person),
+//                 title: Text(title),
+//                 subtitle: Text(description),
+//                 trailing: Icon(Icons.message),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
