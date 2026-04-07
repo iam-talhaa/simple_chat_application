@@ -21,6 +21,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
+
+    //receiver Id = postOwner id
+    //
     // 5. Create unique chatId using both users
     final currentUserId = _auth.currentUser?.uid ?? '';
     final ids = [currentUserId, widget.receiverId];
