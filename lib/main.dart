@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     print('Main Screen');
     print('Called');
+    print('Called');
 
     return MaterialApp(home: AuthScreen());
   }
